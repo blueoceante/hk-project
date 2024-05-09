@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: hk-project
+  datasource:
+    url: jdbc:mysql://localhost:3306/hkproject?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+server:
+  port: 8080
+
+logging:
+    level:
+        com.baomidou.mybatisplus: info
+
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
