@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrderResp {
-    private long id;
-    private int distance;
+    private Long id;
+    private Integer distance;
     private String status;
 }

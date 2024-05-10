@@ -22,7 +22,10 @@ public enum OrderStatus {
     }
 
     // 根据整数值获取枚举值
-    public static OrderStatus fromValue(int value) {
+    public static OrderStatus fromValue(Integer value) {
+        if (value == null) {
+            return OrderStatus.NONE;
+        }
         for (OrderStatus status : OrderStatus.values()) {
             if (status.getValue() == value) {
                 return status;

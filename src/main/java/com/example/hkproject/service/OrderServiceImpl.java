@@ -102,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
         // 创建QueryWrapper对象
         QueryWrapper<OrderTab> wrapper = new QueryWrapper<>();
         wrapper.orderByAsc("id");
-        orderMapper.selectPage(page, wrapper);
+        page = orderMapper.selectPage(page, wrapper);
         // 获取查询结果
         List<OrderTab> orderTabs = page.getRecords();
         if (orderTabs == null || orderTabs.isEmpty()) {
