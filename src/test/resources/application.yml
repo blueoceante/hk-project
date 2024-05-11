@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:hkproject;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+logging:
+    level:
+        com.baomidou.mybatisplus: info
+
+google:
+  api-key: AIza
