@@ -36,7 +36,7 @@ public class OrderServiceTest {
 
     // 测试placeOrder方法，返回数据库插入的订单信息
     @Test
-    public void placeOrder_ShouldCreateOrder() {
+    public void placeOrder_ShouldCreateOrder() throws Exception {
         // Arrange
         String[] origin = new String[]{"39.996794", "116.48105"};
         String[] destination = new String[]{"20.356786", "100.35105"};

@@ -17,3 +17,6 @@ logging:
 #mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+google:
+  api-key: AIzaSyBdh_uGtNSEqaMu5SxPKrKkxe7sMXV7_H0

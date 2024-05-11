@@ -28,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public OrderResp placeOrder(@RequestBody @Valid PlaceOrderReq req) {
+    public OrderResp placeOrder(@RequestBody @Valid PlaceOrderReq req) throws Exception {
         OrderTab orderTab = orderService.placeOrder(req);
         OrderResp resp = PoToDto.orderTabToOrderResp(orderTab);
         if (resp == null) {

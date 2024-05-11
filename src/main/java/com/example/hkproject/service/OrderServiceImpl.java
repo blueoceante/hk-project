@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderTab placeOrder(PlaceOrderReq req) {
+    public OrderTab placeOrder(PlaceOrderReq req) throws Exception {
         // 调用Google Maps API计算距离
         GeoPoint origin = GeoPoint.parse(req.getOrigin());
         GeoPoint destination = GeoPoint.parse(req.getDestination());
