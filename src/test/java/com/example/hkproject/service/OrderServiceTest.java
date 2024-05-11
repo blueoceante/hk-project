@@ -50,11 +50,11 @@ public class OrderServiceTest {
         when(orderMapper.insert(any(OrderTab.class))).thenReturn(5);
 
         // Act
-        OrderTab result = orderService.placeOrder(mockReq);
+        OrderResp result = orderService.placeOrder(mockReq);
 
         // Assert
         assertNotNull(result);
-        assertEquals((Integer) OrderStatus.UNASSIGNED.getValue(), result.getOrderStatus());
+        assertEquals(OrderStatus.UNASSIGNED.getDescription(), result.getStatus());
         assertEquals((Integer) distance, result.getDistance());
     }
 

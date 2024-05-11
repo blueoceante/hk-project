@@ -6,9 +6,7 @@ import com.example.hkproject.dto.PlaceOrderReq;
 import com.example.hkproject.dto.TakeOrderReq;
 import com.example.hkproject.dto.TakeOrderResp;
 import com.example.hkproject.exception.TakeOrderException;
-import com.example.hkproject.po.OrderTab;
 import com.example.hkproject.service.OrderService;
-import com.example.hkproject.util.PoToDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/orders")
 @Validated
 public class OrderController {
     private final OrderService orderService;
@@ -27,28 +26,23 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/orders")
+    @PostMapping
     public OrderResp placeOrder(@RequestBody @Valid PlaceOrderReq req) throws Exception {
-        OrderTab orderTab = orderService.placeOrder(req);
-        OrderResp resp = PoToDto.orderTabToOrderResp(orderTab);
-        if (resp == null) {
-            throw new RuntimeException("Failed to place order");
-        }
-        return resp;
+        return orderService.placeOrder(req);
     }
 
-    @PatchMapping("/orders/{id}")
+    @PatchMapping("/{id}")
     public TakeOrderResp takeOrder(@PathVariable @Min(1) long id, @RequestBody @Valid TakeOrderReq req) throws Exception {
         // 输出订单ID
         TakeOrderRetStatus retStatus = orderService.takeOrder(id);
         if (retStatus == TakeOrderRetStatus.SUCCESS) {
-            return new TakeOrderResp("SUCCESS");
+            return new TakeOrderResp(retStatus.getDescription());
         } else {
             throw new TakeOrderException(retStatus.getDescription());
         }
     }
 
-    @GetMapping("/orders")
+    @GetMapping
     public List<OrderResp> getOrders(@RequestParam @Min(1) int page, @RequestParam @Min(1) int limit) {
         return orderService.getOrders(page, limit);
     }

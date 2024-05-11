@@ -6,7 +6,6 @@ import com.example.hkproject.dto.OrderResp;
 import com.example.hkproject.dto.PlaceOrderReq;
 import com.example.hkproject.dto.TakeOrderReq;
 import com.example.hkproject.exception.TakeOrderException;
-import com.example.hkproject.po.OrderTab;
 import com.example.hkproject.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONArray;
@@ -49,13 +48,13 @@ public class OrderControllerTest {
         PlaceOrderReq mockReq = new PlaceOrderReq();
         mockReq.setOrigin(new String[]{"39.996794", "116.48105"});
         mockReq.setDestination(new String[]{"20.356786", "100.35105"});
-        // ... 设置mockReq的属性
-        OrderTab mockOrderTab = new OrderTab();
-        mockOrderTab.setId(1L);
-        mockOrderTab.setOrderStatus(OrderStatus.UNASSIGNED.getValue());
-        mockOrderTab.setDistance(1000);
 
-        when(orderService.placeOrder(mockReq)).thenReturn(mockOrderTab);
+        OrderResp mockResp = new OrderResp();
+        mockResp.setId(1L);
+        mockResp.setStatus(OrderStatus.UNASSIGNED.getDescription());
+        mockResp.setDistance(1000);
+
+        when(orderService.placeOrder(mockReq)).thenReturn(mockResp);
         mockMvc.perform(post(urlPrefix)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(mockReq)))
@@ -70,7 +69,7 @@ public class OrderControllerTest {
         PlaceOrderReq mockReq = new PlaceOrderReq();
         mockReq.setOrigin(new String[]{"39.996794", "22116.48105"});
         mockReq.setDestination(new String[]{"20.356786", "100.35105"});
-        OrderTab mockOrderTab = new OrderTab();
+        OrderResp mockOrderTab = new OrderResp();
         when(orderService.placeOrder(mockReq)).thenReturn(mockOrderTab);
         mockMvc.perform(post(urlPrefix)
                         .contentType(MediaType.APPLICATION_JSON)

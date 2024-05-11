@@ -8,7 +8,7 @@ import com.example.hkproject.po.OrderTab;
 import java.util.List;
 
 public interface OrderService {
-    OrderTab placeOrder(PlaceOrderReq req) throws Exception;
+    OrderResp placeOrder(PlaceOrderReq req) throws Exception;
     TakeOrderRetStatus takeOrder(long orderId);
     List<OrderResp> getOrders(int page, int limit);
 }
