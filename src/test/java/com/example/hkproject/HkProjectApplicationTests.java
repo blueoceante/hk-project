@@ -7,6 +7,7 @@ import com.example.hkproject.exception.TakeOrderException;
 import com.example.hkproject.thirdParty.GoogleMapService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONArray;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -28,8 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class HkProjectApplicationTests {
+class HkProjectApplicationTests { // 集成测试类
 	@MockBean
 	private GoogleMapService googleMapsService;
 
@@ -37,6 +37,15 @@ class HkProjectApplicationTests {
     private MockMvc mockMvc;
 
 	private static final String urlPrefix = "/orders";
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	@AfterEach
+	public void cleanUpEach() {
+		jdbcTemplate.execute("DROP TABLE IF EXISTS order_tab");
+	}
+
 
 	// 全部接口集成测试流程
 	@Test

@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -34,6 +36,11 @@ public class OrderControllerIntegrationTest {
     private MockMvc mockMvc;
 
     private static final String urlPrefix = "/orders";
+
+    @DynamicPropertySource
+    static void databaseProperties(DynamicPropertyRegistry registry) { // 用于配置内存数据库的数据库实例，避免跟其他测试用例的数据库实例冲突
+        registry.add("spring.datasource.url", () -> "jdbc:h2:mem:hkproject2;MODE=MySQL");
+    }
 
     // 集成测试placeOrder流程
     @Test

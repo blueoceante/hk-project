@@ -9,14 +9,12 @@ import com.example.hkproject.exception.TakeOrderException;
 import com.example.hkproject.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONArray;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -24,15 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(OrderController.class)
+@SpringBootTest
 @AutoConfigureMockMvc // 自动配置MockMvc
-public class OrderControllerTest {
+public class OrderControllerUnitTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -75,7 +73,7 @@ public class OrderControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(mockReq)))
                 .andExpect(status().is4xxClientError())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
+                .andExpect(result -> assertInstanceOf(MethodArgumentNotValidException.class, result.getResolvedException()));
     }
 
     // 测试takeOrder方法，当返回成功状态时，返回成功信息

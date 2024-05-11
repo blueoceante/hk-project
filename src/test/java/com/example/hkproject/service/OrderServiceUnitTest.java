@@ -10,29 +10,35 @@ import com.example.hkproject.dto.PlaceOrderReq;
 import com.example.hkproject.entity.GeoPoint;
 import com.example.hkproject.po.OrderTab;
 import com.example.hkproject.thirdParty.GoogleMapService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OrderServiceTest {
-    @Mock
+@SpringBootTest
+public class OrderServiceUnitTest {
+    @MockBean
     private OrderMapper orderMapper;
 
-    @Mock
+    @MockBean
     private GoogleMapService googleMapsService;
 
-    @InjectMocks
+    @Autowired
     private OrderServiceImpl orderService;
+
+    @DynamicPropertySource
+    static void databaseProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", () -> "jdbc:h2:mem:hkproject3;MODE=MySQL"); // 配置内存数据库的数据库实例，避免跟其他测试用例的数据库实例冲突
+    }
 
     // 测试placeOrder方法，返回数据库插入的订单信息
     @Test
