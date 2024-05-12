@@ -14,9 +14,5 @@ logging:
     level:
         com.baomidou.mybatisplus: info
 
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 google:
   api-key: AIza

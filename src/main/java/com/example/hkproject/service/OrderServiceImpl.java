@@ -12,6 +12,7 @@ import com.example.hkproject.entity.GeoPoint;
 import com.example.hkproject.po.OrderTab;
 import com.example.hkproject.thirdParty.GoogleMapService;
 import com.example.hkproject.util.PoToDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final GoogleMapService googleMapsService;
@@ -84,6 +86,7 @@ public class OrderServiceImpl implements OrderService {
             return TakeOrderRetStatus.SUCCESS;
         } catch (InterruptedException e) {
             // 处理异常
+            log.error("takeOrder error", e);
             return TakeOrderRetStatus.ERROR;
         } finally {
             if (isLocked && lock.isLocked()) {
