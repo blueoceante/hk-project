@@ -6,7 +6,7 @@
 3. docker的宿主机要能连接Internet，因为部署时，需要连接到dockerhup下载镜像，运行时，需要连接到Google Map Api计算坐标距离
 
 ## Google Map API key替换
-1. 修改`api-build/application.yml`文件，将以下内容中的`Bpm12`修改成你的有效Google Map Api Key
+1. 修改`api-build/application.yml`文件的内容，将以下内容中的`Bpm12`修改成你的有效Google Map Api Key
    ```
    google:
      api-key: Bpm12
