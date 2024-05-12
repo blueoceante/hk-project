@@ -3,6 +3,7 @@
 ## 运行环境
 1. 安装了docker和docker-compose的机器
 2. 运行程序前，docker宿主机的8080端口不要被占用；如果不是在宿主机内访问api接口的话，宿主机的8080端口要对外开放
+3. docker的宿主机要能连接Internet，因为部署时，需要连接到dockerhup下载镜像，运行时，需要连接到Google Map Api计算坐标距离
 
 ## Google Map API key替换
 1. 修改`api-build/application.yml`文件，将以下内容中的`Bpm12`修改成你的有效Google Map Api Key
