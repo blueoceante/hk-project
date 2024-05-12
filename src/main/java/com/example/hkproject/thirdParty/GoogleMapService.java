@@ -11,7 +11,7 @@ public class GoogleMapService {
     @Value("${google.api-key}")
     private String apiKey;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final Exception exception = new Exception("Google Map API error");
+    private final String errorBase = "Google Map API error: ";
 
     // 根据传入的经纬度，调用Google Map API获取两点之间的距离，距离以米为单位，返回整数
     public int getDistanceMeter(GeoPoint origin, GeoPoint destination) throws Exception {
@@ -23,17 +23,18 @@ public class GoogleMapService {
 
         if (response == null || response.getStatus() == null || !response.getStatus().equals("OK") ||
                 response.getRows() == null || response.getRows().length == 0) {
-            throw exception;
+            throw getAPiException(response.getStatus());
         }
         GoogleDistanceMatrixResp.Row row = response.getRows()[0];
         if (row.getElements() == null || row.getElements().length == 0) {
-            throw exception;
+            throw getAPiException(response.getStatus());
         }
         // 只关心第一行第一个元素的距离
         GoogleDistanceMatrixResp.Element element = response.getRows()[0].getElements()[0];
         if (element.getStatus() == null || !element.getStatus().equals("OK")) {
-            throw exception;
+            throw getAPiException(element.getStatus());
         }
+
         return element.getDistance().getValue();
     }
 
@@ -43,4 +44,12 @@ public class GoogleMapService {
         }
         return geoPoint.getLatitude().toString() + "," + geoPoint.getLongitude().toString();
     }
+
+    private Exception getAPiException(String status) {
+        if (status == null) {
+            status = "";
+        }
+        return new Exception(errorBase + "apiKey=" + apiKey + " statusRet=" + status);
+    }
+
 }
