@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: hkproject-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: hkproject
+    volumes:
+      - /data/hkproject:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # 将宿主机当前目录下的 init.sql 文件挂载到容器内的初始化脚本目录
+    restart: always
+    networks:
+      - hkproject
+  app:
+    image: hkproject:1.0.0
+    build:
+      context: ./api-build
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:      
+      - JAVA_OPTS=-Xmx512m
+    networks:
+      - hkproject
+
+networks:
+  hkproject:
+    driver: bridge
