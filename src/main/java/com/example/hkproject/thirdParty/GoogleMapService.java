@@ -2,6 +2,8 @@ package com.example.hkproject.thirdParty;
 
 import com.example.hkproject.entity.GeoPoint;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,7 +12,7 @@ public class GoogleMapService {
     private final String MAP_URL_PREFIX = "https://maps.googleapis.com/maps/api/distancematrix/json";
     @Value("${google.api-key}")
     private String apiKey;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
     private final String errorBase = "Google Map API error: ";
 
     // 根据传入的经纬度，调用Google Map API获取两点之间的距离，距离以米为单位，返回整数
@@ -50,6 +52,16 @@ public class GoogleMapService {
             status = "";
         }
         return new Exception(errorBase + "apiKey=" + apiKey + " statusRet=" + status);
+    }
+
+
+    private ClientHttpRequestFactory getClientHttpRequestFactory() {
+        int timeout = 5000;
+        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+                = new HttpComponentsClientHttpRequestFactory();
+        clientHttpRequestFactory.setConnectTimeout(timeout);
+           clientHttpRequestFactory.setConnectionRequestTimeout(timeout);
+        return clientHttpRequestFactory;
     }
 
 }
