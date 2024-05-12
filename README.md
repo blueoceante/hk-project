@@ -19,7 +19,13 @@
    ```
    bash start.sh
    ```
-   显示如下内容后，即表示程序运行成功
+   显示如下类似内容后，即表示程序运行成功
+   ```
+   [+] Running 3/3
+   Network hk-project-master_hkproject  Created                  0.2s 
+   Container hkproject-mysql            Started                  0.4s 
+   Container hk-project-master-app-1    Started                  0.9s
+   ```
 
 ## 代码说明
 1. 本项目基于springboot web，使用maven进行构建
