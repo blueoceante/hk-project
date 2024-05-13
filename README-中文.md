@@ -3,7 +3,14 @@
 ## 运行环境
 1. 安装了docker和docker-compose的机器
 2. 运行程序前，docker宿主机的8080端口不要被占用；如果不是在宿主机内访问api接口的话，宿主机的8080端口要对外开放
-3. docker的宿主机要能连接Internet，因为部署时，需要连接到dockerhup下载镜像，运行时，需要连接到Google Map Api计算坐标距离
+3. MySQL的数据文件挂载到docekr宿主机的/data/hkproject目录下，因此宿主机需是linux系统，需要有/data目录，且可能需要以管理员身份运行`start.sh`脚本才有权限自动创建/data/hkproject目录，
+   如果是mac或windows系统，需要修改docker-compose.yml中的挂载目录，将下面内容中的`/data/hkproject`修改成你需要的目录
+   ```
+   volumes:
+      - /data/hkproject:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+   ```
+4. docker的宿主机要能连接Internet，因为部署时，需要连接到dockerhup下载镜像，运行时，需要连接到Google Map Api计算坐标距离
 
 ## Google Map API key替换
 1. 修改`api-build/application.yml`文件的内容，将以下内容中的`Bpm12`修改成你的有效Google Map Api Key
