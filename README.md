@@ -4,8 +4,17 @@
 1. A machine with Docker and Docker-compose installed
 2. Before running the program, make sure that port 8080 of the Docker host machine is not occupied. If you are not accessing the API interface within the host machine, port 8080 of the 
    host machine needs to be open to the outside.
-3. The Docker host machine needs to be able to connect to the Internet. This is because it needs to connect to Docker Hub to download images during deployment, and it needs to connect to 
-   the Google Map API to calculate coordinate distances during runtime.
+3. The MySQL data files are mounted to the `/data/hkproject` directory on the Docker host, which therefore must be a Linux system that has a `/data` directory, and it may be necessary 
+   to run the start.sh script with administrative privileges to have the permission to automatically create the `/data/hkproject` directory.
+   If you are on a Mac or Windows system, you will need to modify the `docker-compose.yml` file, changing the `/data/hkproject` in the content below to the directory you need.
+   ```
+   volumes:
+      - /data/hkproject:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+   ```
+4. The Docker host machine needs to be able to connect to the Internet. This is because it needs to connect to Docker Hub to download images during deployment, and it needs to connect 
+   to the Google Map API to calculate coordinate distances during runtime.
+   
 ## Google Map API Key Replacement
 1. Modify the contents of the`api-build/application.yml`file, replace the`Bpm12`in the following content with your valid Google Map API Key:
    ```
